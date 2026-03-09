@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Chatbot</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+display:flex;
+height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+background:#111827;
+color:white;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+margin-top:0;
+}
+
+.new-chat{
+background:#2563eb;
+padding:12px;
+border-radius:6px;
+text-align:center;
+cursor:pointer;
+margin-bottom:20px;
+}
+
+.new-chat:hover{
+background:#1d4ed8;
+}
+
+.chat-list{
+flex:1;
+overflow-y:auto;
+}
+
+.chat-item{
+padding:10px;
+background:#1f2937;
+margin-bottom:10px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.chat-item:hover{
+background:#374151;
+}
+
+.logout{
+margin-top:20px;
+color:white;
+text-decoration:none;
+padding:10px;
+background:#dc2626;
+border-radius:5px;
+text-align:center;
+}
+
+.logout:hover{
+background:#b91c1c;
+}
+
+/* CHAT AREA */
+
+.chat-container{
+flex:1;
+display:flex;
+flex-direction:column;
+background:#f1f5f9;
+}
+
+/* MESSAGE AREA */
+
+.messages{
+flex:1;
+padding:20px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+}
+
+/* MESSAGE BUBBLES */
+
+.message{
+max-width:60%;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+word-wrap:break-word;
+}
+
+.user{
+background:#2563eb;
+color:white;
+margin-left:auto;
+}
+
+.bot{
+background:white;
+border:1px solid #ddd;
+}
+
+/* INPUT AREA */
+
+.input-area{
+display:flex;
+padding:15px;
+background:white;
+border-top:1px solid #ddd;
+}
+
+.input-area input{
+flex:1;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+.input-area button{
+margin-left:10px;
+padding:10px 18px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.input-area button:hover{
+background:#1d4ed8;
+}
+.chat-item{
+padding:10px;
+background:#1f2937;
+margin-bottom:10px;
+border-radius:6px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.chat-item a{
+color:white;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>AI Chat</h2>
+
+<a href="/new/" style="text-decoration:none;color:white;">
+<div class="new-chat">
++ New Chat
+</div>
+</a>
+
+<div class="chat-list">
+
+{% for s in sessions %}
+
+<a href="/chat/{{ s.id }}/" style="text-decoration:none;color:white;">
+<div class="chat-item">
+{{ s.title }}
+</div>
+</a>
+
+{% empty %}
+
+<p>No chats yet</p>
+
+{% endfor %}
+
+</div>
+
+<a href="/accounts/logout/" class="logout">
+Logout
+</a>
+
+</div>
+
+<!-- CHAT AREA -->
+
+<div class="chat-container">
+
+<div class="messages">
+
+{% if messages %}
+
+{% for message in messages %}
+
+{% if message.role == "user" %}
+
+<div class="message user">
+{{ message.content }}
+</div>
+
+{% else %}
+
+<div class="message bot">
+{{ message.content }}
+</div>
+
+{% endif %}
+
+{% endfor %}
+
+{% else %}
+
+<p>Start a conversation with the AI...</p>
+
+{% endif %}
+
+</div>
+
+<form method="POST" class="input-area">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="message"
+placeholder="Ask something..."
+required
+>
+
+<button type="submit">
+Send
+</button>
+
+<div class="chat-list">
+
+{% for s in sessions %}
+
+<div class="chat-item">
+
+<a href="/chat/{{ s.id }}/" style="text-decoration:none;color:white;">
+{{ s.title }}
+</a>
+
+<a href="/delete/{{ s.id }}/"
+style="float:right;color:red;text-decoration:none;"
+onclick="return confirm('Delete this chat?');">
+✖
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+</form>
+
+</div>
+
+</body>
+</html>
