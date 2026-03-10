@@ -17,7 +17,9 @@ class ChatSession(models.Model):
 class Message(models.Model):
     session = models.ForeignKey(ChatSession, on_delete=models.CASCADE)
     role = models.CharField(max_length=10)  # user / assistant
-    content = models.TextField()
+    content = models.TextField(blank=True,null=True)
+    file = models.FileField(upload_to="uploads/",blank=True,null=True)
+    created = models.DateTimeField(auto_now_add=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
