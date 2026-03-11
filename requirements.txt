@@ -1,0 +1,5 @@
+
+Django>=4.2
+groq
+python-dotenv
+requests
