@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <body>
 
 <!-- SIDEBAR -->
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <div class="mobile-header">
-<button id="menuBtn">☰</button>
+{% comment %} <button id="menu-toggle" class="menu-toggle">☰</button> {% endcomment %}
 <span>AI Chat</span>
 </div>
 <button id="themeToggle" class="theme-toggle">
@@ -77,8 +77,8 @@ Logout
 
 <div class="avatar user-avatar">U</div>
 
-<div class="message">
-{{ message.content }}
+<div class="message bot-message">
+    {{ message.content }}
 </div>
 
 </div>

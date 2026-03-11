@@ -264,3 +264,23 @@ color:white;
 background:#f5f5f5;
 
 }
+.sidebar{
+    width:250px;
+    background:#202123;
+    color:white;
+    height:100vh;
+    transition:0.3s;
+}
+
+.sidebar.collapsed{
+    width:60px;
+}
+
+.menu-toggle{
+    background:none;
+    border:none;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    margin-bottom:15px;
+}
